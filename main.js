@@ -72,6 +72,27 @@
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
+  // 6. Light / dark toggle. The <head> script already applied the starting theme.
+  var root = document.documentElement;
+  var toggle = document.querySelector('.theme-toggle');
+  var media = window.matchMedia('(prefers-color-scheme: dark)');
+  function stored() { try { return localStorage.getItem('theme'); } catch (e) { return null; } }
+  function apply(theme) {
+    root.setAttribute('data-theme', theme);
+    if (toggle) toggle.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+  }
+  apply(root.getAttribute('data-theme') || (media.matches ? 'dark' : 'light'));
+  if (toggle) {
+    toggle.addEventListener('click', function () {
+      var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      apply(next);
+      try { localStorage.setItem('theme', next); } catch (e) {}
+    });
+  }
+  // If the visitor never picked a theme, keep following their device when it changes (e.g. at sunset).
+  var follow = function (e) { if (!stored()) apply(e.matches ? 'dark' : 'light'); };
+  if (media.addEventListener) media.addEventListener('change', follow); else if (media.addListener) media.addListener(follow);
+
   var y = document.getElementById('year');
   if (y) y.textContent = new Date().getFullYear();
 })();

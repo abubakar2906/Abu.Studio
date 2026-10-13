@@ -5,7 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Abu.Studio — Websites &amp; apps that take orders and payments</title>
   <meta name="description" content="Fixed-price websites, web apps and mobile apps for Nigerian businesses. From ₦100,000. Paystack & Monnify payments, WhatsApp ordering, admin dashboards — and you own all the code.">
-  <meta name="theme-color" content="#F5F3EE">
+  <meta name="theme-color" content="#F5F3EE" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#121211" media="(prefers-color-scheme: dark)">
 
   <meta property="og:type" content="website">
   <meta property="og:title" content="Abu.Studio — Websites & apps that take orders and payments">
@@ -24,8 +25,17 @@
   <link rel="stylesheet" href="styles.css">
   <link rel="preload" as="image" href="assets/work/merit-desktop-800.webp" imagesrcset="assets/work/merit-desktop-800.webp 800w, assets/work/merit-desktop-1600.webp 1600w" imagesizes="(min-width: 960px) 600px, 92vw">
 
-  <!-- Content is visible without JavaScript. This class only switches on the scroll-reveal polish. -->
-  <script>document.documentElement.classList.add('js')</script>
+  <!-- Runs before paint: turns on the JS-only polish and applies the saved theme (no white flash).
+       Content is fully visible without JavaScript; the theme then just follows the device setting. -->
+  <script>
+    (function () {
+      var d = document.documentElement, t = null;
+      d.classList.add('js');
+      try { t = localStorage.getItem('theme'); } catch (e) {}
+      if (t !== 'light' && t !== 'dark') t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      d.setAttribute('data-theme', t);
+    })();
+  </script>
 
   <script type="application/ld+json">
   {
@@ -61,6 +71,11 @@
         <a href="#process">How it works</a>
         <a href="#faq">FAQ</a>
       </nav>
+
+      <button class="theme-toggle" type="button" aria-label="Switch to dark mode">
+        <svg class="ico i-moon" aria-hidden="true"><use href="#i-moon"/></svg>
+        <svg class="ico i-sun" aria-hidden="true"><use href="#i-sun"/></svg>
+      </button>
 
       <a class="btn btn-wa btn-sm nav-cta" data-wa="Hi Abu, I found you through your website. I'd like to talk about a project." href="https://wa.me/2349018450336">
         <svg class="ico" aria-hidden="true"><use href="#i-wa"/></svg>
@@ -604,6 +619,8 @@
     <symbol id="i-chart" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 20V4M4 20h16"/><path d="M8 16v-4M12 16V8M16 16v-6"/></g></symbol>
     <symbol id="i-phone" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M11 18.5h2"/></g></symbol>
     <symbol id="i-cal" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></g></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11Z"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></g></symbol>
     <symbol id="i-mail" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></g></symbol>
   </svg>
 
